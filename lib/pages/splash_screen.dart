@@ -16,14 +16,13 @@ class SplashScreen extends StatelessWidget {
 
     return Scaffold(
       body: Container(
-        // Define a área com o degradê
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topCenter, // Início do degradê (cima)
-            end: Alignment.bottomCenter, // Fim do degradê (baixo)
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
             colors: [
-              Color(0xFFFC3F75), // Cor do topo
-              Color(0xFFDC1276), // Cor de baixo
+              Color(0xFFFC3F75),
+              Color(0xFFDC1276),
             ],
           ),
         ),

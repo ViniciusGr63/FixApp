@@ -10,9 +10,8 @@ import 'pages/profile_page.dart';
 import 'pages/logout_page.dart';
 import 'pages/service_page.dart';
 
+bool isLoggedIn = false; //kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkklogin
 void main() => runApp(const MyApp());
-
-bool isLoggedIn = true; //kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkklogin
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

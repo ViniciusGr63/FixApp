@@ -8,6 +8,7 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var txt = "fulano";
     var wh, hg;
+
     return CustomScaffold(
       title: "Sobre",
       body: Center(
@@ -49,12 +50,12 @@ class ProfilePage extends StatelessWidget {
                   children: [
                     Image.asset(
                       'assets/images/fotoExemplo.png',
-                      height: 125, // Ajuste o tamanho conforme necessário
+                      height: 125,
                     ),
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               const Text(
@@ -65,57 +66,18 @@ class ProfilePage extends StatelessWidget {
                   color: Color(0xff7C7C7C),
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                padding: const EdgeInsets.all(16.0),
-                width: 230,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: Color(0xffFFFF00),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: Colors.white,
-                    width: 1,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color(0xff7C7C7C),
-                      offset: Offset(10, 10),
-                      blurRadius: 0,
-                    ),
-                  ],
-                ),
-                child: const Text(
-                  'nomeee',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xff7C7C7C),
-                  ),
-                ),
-              ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
-              caixa(txt, wh = 230, hg = 40),
-              SizedBox(
+              caixa(txt, wh = 230, hg = 40, context),
+              const SizedBox(
                 height: 30,
               ),
-              caixa(txt, wh = 230, hg = 40),
-              SizedBox(
+              caixa(txt, wh = 230, hg = 40, context),
+              const SizedBox(
                 height: 30,
               ),
-              caixa(txt, wh = 230, hg = 40),
-              SizedBox(
-                height: 30,
-              ),
-              caixa(txt, wh = 230, hg = 40),
-              SizedBox(
-                height: 30,
-              ),
-              caixa(txt, wh = 230, hg = 40),
+              caixa('Sair', wh = 230, hg = 40, context),
             ],
           ),
         ),
@@ -123,7 +85,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  caixa<Widget>(txt, wh, hg) {
+  caixa(txt, wh, hg, BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16.0),
       width: wh,
@@ -143,12 +105,19 @@ class ProfilePage extends StatelessWidget {
           ),
         ],
       ),
-      child: Text(
-        txt,
-        style: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-          color: Color(0xff7C7C7C),
+      child: TextButton(
+        onPressed: () {
+          isLoggedIn = false;
+
+          Navigator.pushReplacementNamed(context, '/home');
+        },
+        child: Text(
+          txt,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
 import '../main.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -9,86 +10,40 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Widget> listOne = List.generate(10, (index) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 8.0),
-      child: Container(
-        width: 100,
-        height: 100,
-        decoration: BoxDecoration(
-          color: Color(0xfff7fb27),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: Colors.white,
-            width: 2,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Color(0xff7C7C7C),
-              offset: Offset(5, 5),
-              blurRadius: 0,
-            ),
-          ],
-        ),
-        child: Column(children: [
-          Text(
-            'Item $index',
-            style: TextStyle(
-              color: Color(0xff7C7C7C),
-              fontSize: 14,
-            ),
-          ),
-          Image.asset(
-            'assets/images/fotoExemplo.png',
-            height: 80, // Ajuste o tamanho conforme necessário
-          ),
-        ]),
-      ),
-    );
-  });
+  List<dynamic> listOneData = [];
+  List<dynamic> listTwoData = [];
 
-  final List<Widget> listTwo = List.generate(8, (index) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 8.0),
-      child: Container(
-        width: 100,
-        height: 120,
-        decoration: BoxDecoration(
-          color: Color(0xfff7fb27),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: Colors.white,
-            width: 2,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Color(0xff7C7C7C),
-              offset: Offset(5, 5),
-              blurRadius: 0,
-            ),
-          ],
-        ),
-        child: Column(children: [
-          Text(
-            'Item $index',
-            style: TextStyle(
-              color: Color(0xff7C7C7C),
-              fontSize: 14,
-            ),
-          ),
-          Image.asset(
-            'assets/images/fotoExemplo.png',
-            height: 80, // Ajuste o tamanho conforme necessário
-          ),
-        ]),
-      ),
-    );
-  });
+  // buscar os dados
+  Future<void> fetchData() async {
+    try {
+      Dio dio = Dio();
+      final responseOne =
+          await dio.get('https://fixappapi.onrender.com/api/categorias');
+      final responseTwo =
+          await dio.get('https://fixappapi.onrender.com/api/profissionais');
+
+      setState(() {
+        listOneData = responseOne.data;
+        listTwoData = responseTwo.data;
+      });
+    } catch (e) {
+      print('Erro ao carregar dados: $e');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
 
   @override
   Widget build(BuildContext context) {
+    //largura da tela
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return CustomScaffold(
-      title: "Home",
+      title: 'Home',
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -113,12 +68,61 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               const SizedBox(height: 10),
               SizedBox(
-                height: 120,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: listOne,
-                ),
+                height: screenWidth * 0.3,
+                child: listOneData.isEmpty
+                    ? const Center(child: CircularProgressIndicator())
+                    : ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: listOneData.length,
+                        itemBuilder: (context, index) {
+                          var item = listOneData[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Container(
+                              width: screenWidth * 0.25,
+                              height: screenWidth * 0.25,
+                              decoration: BoxDecoration(
+                                color: const Color(0xfff7fb27),
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 2,
+                                ),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color(0xff7C7C7C),
+                                    offset: Offset(5, 5),
+                                    blurRadius: 0,
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    item['name'] ?? 'Sem título',
+                                    style: const TextStyle(
+                                      color: Color(0xff7C7C7C),
+                                      fontSize: 12,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Image.network(
+                                    item['imageUrl'] ??
+                                        'https://via.placeholder.com/150',
+                                    height: screenWidth * 0.15,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
               ),
+              const SizedBox(height: 30),
               const Divider(thickness: 2),
               const Text(
                 'Profissionais',
@@ -130,11 +134,59 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               const SizedBox(height: 10),
               SizedBox(
-                height: 180,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: listTwo,
-                ),
+                height: screenWidth * 0.4,
+                child: listTwoData.isEmpty
+                    ? const Center(child: CircularProgressIndicator())
+                    : ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: listTwoData.length,
+                        itemBuilder: (context, index) {
+                          var item = listTwoData[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Container(
+                              width: screenWidth * 0.3,
+                              height: screenWidth * 0.3,
+                              decoration: BoxDecoration(
+                                color: const Color(0xfff7fb27),
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 2,
+                                ),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color(0xff7C7C7C),
+                                    offset: Offset(5, 5),
+                                    blurRadius: 0,
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    item['name'] ?? 'Sem nome',
+                                    style: const TextStyle(
+                                      color: Color(0xff7C7C7C),
+                                      fontSize: 12,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Image.network(
+                                    item['imageUrl'] ??
+                                        'https://via.placeholder.com/150',
+                                    height: screenWidth * 0.2,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
               ),
             ],
           ),
