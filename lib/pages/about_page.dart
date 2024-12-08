@@ -1,119 +1,77 @@
 import 'package:flutter/material.dart';
-import '../main.dart'; // Verifique se o caminho de importação do CustomScaffold está correto
+import '../main.dart';
 
-// Classe ServicePage representando a tela do serviço
-class ServicePage extends StatelessWidget {
-  const ServicePage({super.key});
+// Classe que representa a página "Sobre"
+class AboutPage extends StatelessWidget {
+  const AboutPage({super.key}); // Construtor padrão para widgets sem estado (StatelessWidget)
 
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      // Título da página
-      title: "Serviço_ x",
-
-      // Corpo da página centralizado
+      title: "Sobre", // Título da página exibido no AppBar
       body: Center(
         child: Padding(
-          // Espaçamento ao redor do conteúdo
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0), // Espaçamento em torno do conteúdo
           child: Column(
-            // Alinhamento no início para os elementos da coluna
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start, // Alinha os filhos à esquerda
             children: <Widget>[
-              // Texto de título "Sobre"
+              // Texto do cabeçalho "Sobre"
               const Text(
                 'Sobre',
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xff7C7C7C),
+                  color: Color(0xff7C7C7C), // Cor do texto (cinza)
                 ),
               ),
-
-              // Espaçamento vertical
-              const SizedBox(height: 20),
-
-              // Container para exibir informações detalhadas
+              const SizedBox(height: 20), // Espaço entre o cabeçalho e o conteúdo
+              
+              // Caixa amarela com borda arredondada e sombra
               Container(
-                padding: const EdgeInsets.all(16.0), // Espaçamento interno
-                width: 250, // Largura fixa
-                height: 400, // Altura fixa
+                padding: const EdgeInsets.all(16.0), // Espaçamento interno do container
+                width: 250, // Largura do container
+                height: 400, // Altura do container
                 decoration: BoxDecoration(
                   color: Color(0xffFFFF00), // Cor de fundo amarela
                   borderRadius: BorderRadius.circular(20), // Bordas arredondadas
                   border: Border.all(
-                    color: Colors.white, // Cor da borda
+                    color: Colors.white, // Cor da borda (branca)
                     width: 1, // Largura da borda
                   ),
-                  // Sombra para dar um efeito de profundidade
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0xff7C7C7C), // Cor da sombra
-                      offset: Offset(20, 20), // Deslocamento da sombra
-                      blurRadius: 0, // Raio de desfoque
+                      color: Color(0xff7C7C7C), // Cor da sombra (cinza)
+                      offset: Offset(20, 20), // Posição da sombra (deslocamento)
+                      blurRadius: 0, // Controle do desfoque da sombra
                     ),
                   ],
                 ),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start, // Alinhamento dos textos
+                  crossAxisAlignment: CrossAxisAlignment.start, // Alinha os elementos internos à esquerda
                   children: [
-                    // Texto de descrição longa
+                    // Saudação inicial dentro do container
                     const Text(
-                      'descrição: Lorem Ipsum is simply dus standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
+                      'Olá!!!',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xff7C7C7C),
+                        color: Color(0xff7C7C7C), // Cor do texto (cinza)
                       ),
                     ),
+                    const SizedBox(height: 10), // Espaço entre os textos
 
-                    // Espaçamento vertical
-                    const SizedBox(height: 10),
-
-                    // Informações adicionais (repetitivas)
+                    // Texto explicativo sobre o aplicativo
                     const Text(
-                      'info',
-                      textAlign: TextAlign.left,
+                      'Este é um aplicativo simples feito com Flutter. '
+                      'Aqui você pode aprender como navegar entre páginas e '
+                      'fazer chamadas de API. A página "Sobre" é destinada a '
+                      'informar ao usuário mais sobre o app.',
+                      textAlign: TextAlign.left, // Alinha o texto à esquerda
                       style: TextStyle(
                         fontSize: 16,
-                        color: Color(0xff7C7C7C),
+                        color: Color(0xff7C7C7C), // Cor do texto (cinza)
                       ),
                     ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      'info',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xff7C7C7C),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      'info',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xff7C7C7C),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      'info',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xff7C7C7C),
-                      ),
-                    ),
-
-                    // Botão de ação
-                    ElevatedButton(
-                      onPressed: () {
-                        // Lógica do botão será adicionada aqui
-                      },
-                      child: const Text("Adicionar"),
-                    )
                   ],
                 ),
               ),
