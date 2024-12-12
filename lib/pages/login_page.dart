@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../main.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 class LoginPage extends StatefulWidget {
@@ -45,8 +45,15 @@ class _LoginPageState extends State<LoginPage> {
           var user = data['user'];
 
           // Aqui você pode armazenar o token para autenticação posterior
+          // final prefs = await SharedPreferences.getInstance();
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString('auth_token', token); // Salvar o token
+          await prefs.setString('user_email', user['email']);
+          await prefs.setString(
+              'user_id', user['id'].toString()); // Salvar o email do usuário
           print('Token: $token');
           print('Usuário: ${user['email']}');
+          print('ID do usuário: ${user['id']}');
 
           return true;
         } else {
